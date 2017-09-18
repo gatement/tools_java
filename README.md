@@ -1,5 +1,6 @@
 # tools_java
 tools in java
 
-mvn exec:java
-mvn test
+## Run
+* mvn exec:java
+* mvn test
