@@ -1,6 +1,7 @@
 package johnson.tools;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +9,20 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.Test;
 
 public class HashTest {
+	@Test
+	public void testCRC32() {
+		String expected = "352441c2";
+		String actual = Hash.crc32("abc".getBytes(Charset.forName("UTF-8")));
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testAdler32() {
+		String expected = "24d0127";
+		String actual = Hash.adler32("abc".getBytes(Charset.forName("UTF-8")));
+		assertEquals(expected, actual);
+	}
+
 	@Test
 	public void testMd5() throws NoSuchAlgorithmException {
 		byte[] expected = new byte[] { (byte) 144, 1, 80, (byte) 152, 60, (byte) 210, 79, (byte) 176, (byte) 214,
