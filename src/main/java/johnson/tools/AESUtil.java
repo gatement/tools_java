@@ -14,6 +14,7 @@ public class AESUtil {
 	public static final String KEY_ALGORITHM = "AES";
 	public static final String CIPHER_ALGORITHM_ECB_PKCS5 = "AES/ECB/PKCS5Padding";
 	public static final String CIPHER_ALGORITHM_ECB_PKCS7 = "AES/ECB/PKCS7Padding";
+	public static final String CIPHER_ALGORITHM_ECB_NOPADDING = "AES/ECB/NoPadding";
 
 	public static byte[] initKey(int keySize) throws Exception {
 		KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
@@ -25,6 +26,20 @@ public class AESUtil {
 	public static Key toKey(byte[] key) throws Exception {
 		SecretKey secretKey = new SecretKeySpec(key, KEY_ALGORITHM);
 		return secretKey;
+	}
+
+	public static byte[] encryptNoPadding(byte[] data, byte[] key) throws Exception {
+		Key k = toKey(key);
+		Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_ECB_NOPADDING);
+		cipher.init(Cipher.ENCRYPT_MODE, k);
+		return cipher.doFinal(data);
+	}
+
+	public static byte[] decryptNoPadding(byte[] data, byte[] key) throws Exception {
+		Key k = toKey(key);
+		Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_ECB_NOPADDING);
+		cipher.init(Cipher.DECRYPT_MODE, k);
+		return cipher.doFinal(data);
 	}
 
 	public static byte[] encryptPKCS5(byte[] data, byte[] key) throws Exception {
