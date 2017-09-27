@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.zip.CRC32;
 import java.util.zip.Adler32;
 
-public class Hash {
+public class HashUtil {
 	public static String crc32(byte[] input) {
 		CRC32 crc32 = new CRC32();
 		crc32.update(input);
