@@ -19,7 +19,7 @@ public class DSAUtil {
 	public static final String SIGNATURE_ALGORITHM = "SHA1withDSA";
 	private static final String PUBLIC_KEY = "DSAPublicKey";
 	private static final String PRIVATE_KEY = "DSAPrivateKey";
-	private static final int KEY_SIZE = 1024;
+	private static final int KEY_SIZE = 2048;
 	
 	public static byte[] sign(byte[] data, byte[] privateKey) throws Exception {
 	    PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);

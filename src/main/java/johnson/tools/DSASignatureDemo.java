@@ -5,7 +5,7 @@ import java.security.KeyPairGenerator;
 import java.security.Signature;
 import java.security.SignedObject;
 
-public class SignatureDemo {
+public class DSASignatureDemo {
 	public static void demoDSASignature1() throws Exception {
 		byte[] data = "Data Signature".getBytes();
 
