@@ -1,6 +1,7 @@
 package johnson.tools;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import org.junit.Test;
 public class RSAUtilTest {
 
 	@Test
-	public void test() throws Exception {
+	public void testEncodec() throws Exception {
 		String inputStr = "Johnson";
 		byte[] inputData = inputStr.getBytes("UTF-8");
 		
@@ -27,5 +28,21 @@ public class RSAUtilTest {
 		byte[] publicKeyEncrypted = RSAUtil.encryptByPublicKey(inputData, publicKey);
 		byte[] privateKeyDecrypted = RSAUtil.decryptByPrivateKey(publicKeyEncrypted, privateKey);
 		assertArrayEquals(inputData, privateKeyDecrypted);
+	}
+
+	@Test
+	public void testSignature() throws Exception {
+		String inputStr = "Johnson";
+		byte[] inputData = inputStr.getBytes("UTF-8");
+		
+		Map<String, Object> keyMap = RSAUtil.initKey();
+		byte[] privateKey = RSAUtil.getPrivatekey(keyMap);
+		byte[] publicKey = RSAUtil.getPublickey(keyMap);
+
+		byte[] sign = RSAUtil.sign(inputData, privateKey);
+		System.out.println("RSA signature = " + Base64.encodeBase64String(sign));
+		
+		boolean verification = RSAUtil.verify(inputData, publicKey, sign);
+		assertTrue(verification);
 	}
 }
