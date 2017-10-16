@@ -37,8 +37,8 @@ public class SSLSocketCertPrintTest {
 		Certificate[] servercerts = session.getPeerCertificates();
 		for(Certificate cer : servercerts) {
 			System.out.println("========================================");
-			System.out.println("Certificate: " + cer.toString());
-			//System.out.println(Base64.getMimeEncoder().encodeToString(cer.getEncoded()));
+			//System.out.println("Certificate: " + cer.toString());
+			System.out.println(Base64.getMimeEncoder().encodeToString(cer.getEncoded()));
 		}
 	}
 }
