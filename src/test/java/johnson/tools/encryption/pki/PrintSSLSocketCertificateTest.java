@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.pki;
 
 import java.security.cert.Certificate;
 import java.util.Base64;
@@ -10,10 +10,10 @@ import javax.net.ssl.SSLSocketFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SSLSocketCertPrintTest {
+public class PrintSSLSocketCertificateTest {
 	private String password = "123456";
-	private String keyStorePath = "./certs/SSLSocketFactoryUtil/johnsonlau_keycert.keystore";
-	private String trustStorePath = "./certs/SSLSocketFactoryUtil/cacert.keystore";
+	private String keyStorePath = "./certs/PrintSSLSocketCertificateTest/client_keycert.keystore";
+	private String trustStorePath = "./certs/PrintSSLSocketCertificateTest/cacert.keystore";
 
 	private String hostname;
 	private int port;
@@ -38,7 +38,7 @@ public class SSLSocketCertPrintTest {
 		for(Certificate cer : servercerts) {
 			System.out.println("========================================");
 			//System.out.println("Certificate: " + cer.toString());
-			System.out.println(Base64.getMimeEncoder().encodeToString(cer.getEncoded()));
+			//System.out.println(Base64.getMimeEncoder().encodeToString(cer.getEncoded()));
 		}
 	}
 }

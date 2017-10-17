@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.pki;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -13,6 +13,18 @@ import javax.net.ssl.TrustManagerFactory;
 
 public class SSLSocketFactoryUtil {
 	public static final String PROTOCOL = "TLS";
+
+	public static SSLSocketFactory getSSLSocketFactory(String password, String keyStorePath, String trustStorePath)
+			throws Exception {
+		SSLContext ctx = getSSLContext(password, keyStorePath, trustStorePath);
+		return ctx.getSocketFactory();
+	}
+
+	public static SSLServerSocketFactory getSSLServerSocketFactory(String password, String keyStorePath, String trustStorePath)
+			throws Exception {
+		SSLContext ctx = getSSLContext(password, keyStorePath, trustStorePath);
+		return ctx.getServerSocketFactory();
+	}
 
 	private static KeyStore getKeyStore(String keyStorePath, String password) throws Exception {
 		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -36,23 +48,5 @@ public class SSLSocketFactoryUtil {
 		SSLContext ctx = SSLContext.getInstance(PROTOCOL);
 		ctx.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
 		return ctx;
-	}
-
-	public static SSLSocketFactory getSSLSocketFactory(String password, String keyStorePath, String trustStorePath)
-			throws Exception {
-		SSLContext ctx = getSSLContext(password, keyStorePath, trustStorePath);
-		return ctx.getSocketFactory();
-	}
-
-	public static SSLServerSocketFactory getSSLServerSocketFactory(String password, String keyStorePath, String trustStorePath)
-			throws Exception {
-		SSLContext ctx = getSSLContext(password, keyStorePath, trustStorePath);
-		return ctx.getServerSocketFactory();
-	}
-
-	public static void configSSLSocketFactory(HttpsURLConnection conn, String password, String keyStorePath,
-			String trustStorePath) throws Exception {
-		SSLSocketFactory sslSocketFactory = getSSLSocketFactory(password, keyStorePath, trustStorePath);
-		conn.setSSLSocketFactory(sslSocketFactory);
 	}
 }

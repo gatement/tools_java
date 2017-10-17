@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.pki;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -11,7 +11,7 @@ import java.security.cert.X509Certificate;
 
 import javax.crypto.Cipher;
 
-public class CertificateCodec {
+public class CertificateUtil {
 	public static final String CERT_TYPE = "X.509";
 
 	public static byte[] encryptByPrivateKey(byte[] data, String keyStorePath, String alias, String password)
@@ -19,14 +19,6 @@ public class CertificateCodec {
 		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath, alias, password);
 		Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-		return cipher.doFinal(data);
-	}
-
-	public static byte[] decryptByPrivateKey(byte[] data, String keyStorePath, String alias, String password)
-			throws Exception {
-		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath, alias, password);
-		Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
 		return cipher.doFinal(data);
 	}
 
@@ -42,6 +34,14 @@ public class CertificateCodec {
 		PublicKey publicKey = getPublicKeyByKeyStore(keyStorePath, alias, password);
 		Cipher cipher = Cipher.getInstance(publicKey.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+		return cipher.doFinal(data);
+	}
+
+	public static byte[] decryptByPrivateKey(byte[] data, String keyStorePath, String alias, String password)
+			throws Exception {
+		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath, alias, password);
+		Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());
+		cipher.init(Cipher.DECRYPT_MODE, privateKey);
 		return cipher.doFinal(data);
 	}
 

@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.pki;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +15,7 @@ public class SSLSocketServer {
 	private String keyStorePassword = "123456";
 
 	public SSLSocketServer() {
-		port = 7070;
+		port = 10000;
 		System.setProperty("javax.net.ssl.keyStore", serverKeyCertKeystore);
 		System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassword);
 		// System.setProperty("javax.net.ssl.trustStore", "");
@@ -24,12 +24,13 @@ public class SSLSocketServer {
 
 	public void run() throws Exception {
 		System.out.println("SSL listening on port: " + port);
+
 		SSLServerSocket serverSocket = null;
 		try {
 			// here use the properties above to set keystore path
-			// Alternate: use SSLSocketFactoryUtil.getSSLServerSocketFactory to get SSLServerSocketFactory
-			//SSLServerSocketFactory socketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+			// Alternate: use SSLSocketFactoryUtil.getSSLServerSocketFactory to get SSLServerSocketFactory as following:
 			SSLServerSocketFactory socketFactory = SSLSocketFactoryUtil.getSSLServerSocketFactory(keyStorePassword, serverKeyCertKeystore, serverKeyCertKeystore);
+			//SSLServerSocketFactory socketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
 			serverSocket = (SSLServerSocket) socketFactory.createServerSocket(port);
 		} catch (Exception e) {

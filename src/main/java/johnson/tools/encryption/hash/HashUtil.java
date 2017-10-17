@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.hash;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.symmetry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,17 +12,16 @@ public class PBEUtilTest {
 		String password = "mypassword";
 		String inputStr = "Johnson";
 
-		System.out.println("plain text: " + inputStr);
+		//System.out.println("plain text: " + inputStr);
 		byte[] inputData = inputStr.getBytes("UTF-8");
 
 		byte[] salt = PBEUtil.initSalt();
 		byte[] encryptedData = PBEUtil.encrypt(inputData, password, salt);
-		System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
+		//System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
 
 		byte[] decryptedData = PBEUtil.decrypt(encryptedData, password, salt);
 		String decryptedStr = new String(decryptedData, "UTF-8");
-		System.out.println("decrypted text: " + decryptedStr);
-		System.out.println();
+		//System.out.println("decrypted text: " + decryptedStr);
 
 		assertEquals(inputStr, decryptedStr);
 	}

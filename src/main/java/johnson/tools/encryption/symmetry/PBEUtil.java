@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.symmetry;
 
 import java.security.Key;
 import java.security.SecureRandom;
@@ -10,19 +10,12 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 public class PBEUtil {
-	public static final String ALOGRITHM = "PBEWITHMD5andDES";
-	public static final int ITERATION_COUNT = 100;
+	private static final String ALOGRITHM = "PBEWITHMD5andDES";
+	private static final int ITERATION_COUNT = 100;
 
 	public static byte[] initSalt() throws Exception {
 		SecureRandom random = new SecureRandom();
 		return random.generateSeed(8);
-	}
-
-	private static Key toKey(String password) throws Exception {
-		PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
-		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALOGRITHM);
-		SecretKey secretKey = keyFactory.generateSecret(keySpec);
-		return secretKey;
 	}
 
 	public static byte[] encrypt(byte[] data, String password, byte[] salt) throws Exception {
@@ -39,5 +32,12 @@ public class PBEUtil {
 		Cipher cipher = Cipher.getInstance(ALOGRITHM);
 		cipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 		return cipher.doFinal(data);
+	}
+
+	private static Key toKey(String password) throws Exception {
+		PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
+		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALOGRITHM);
+		SecretKey secretKey = keyFactory.generateSecret(keySpec);
+		return secretKey;
 	}
 }

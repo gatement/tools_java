@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.asymmetry;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +19,7 @@ public class DSAUtilTest {
 		byte[] publicKey = DSAUtil.getPublickey(keyMap);
 
 		byte[] sign = DSAUtil.sign(inputData, privateKey);
-		System.out.println("DSA signature = " + Base64.encodeBase64String(sign));
+		//System.out.println("DSA signature = " + Base64.encodeBase64String(sign));
 		
 		boolean verification = DSAUtil.verify(inputData, publicKey, sign);
 		assertTrue(verification);

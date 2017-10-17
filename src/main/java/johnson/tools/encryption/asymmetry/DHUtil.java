@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.asymmetry;
 
 import java.security.Key;
 import java.security.KeyFactory;
@@ -38,9 +38,9 @@ public class DHUtil {
 		return keyMap;
 	}
 
-	public static Map<String, Object> initKey(byte[] key) throws Exception {
+	public static Map<String, Object> initKey(byte[] peerPublicKey) throws Exception {
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(key);
+		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(peerPublicKey);
 		PublicKey pubKey = keyFactory.generatePublic(x509KeySpec);
 		DHParameterSpec dhParamSpec = ((DHPublicKey) pubKey).getParams();
 
@@ -54,19 +54,15 @@ public class DHUtil {
 		keyMap.put(PRIVATE_KEY, privateKey);
 		return keyMap;
 	}
-
-	public static byte[] encrypt(byte[] data, byte[] key) throws Exception {
-		SecretKey secretKey = new SecretKeySpec(key, SECRET_ALGORITHM);
-		Cipher cipher = Cipher.getInstance(secretKey.getAlgorithm());
-		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-		return cipher.doFinal(data);
+	
+	public static byte[] getPrivatekey(Map<String, Object> keyMap) throws Exception {
+		Key key = (Key) keyMap.get(PRIVATE_KEY);
+		return key.getEncoded();
 	}
 
-	public static byte[] decrypt(byte[] data, byte[] key) throws Exception {
-		SecretKey secretKey = new SecretKeySpec(key, SECRET_ALGORITHM);
-		Cipher cipher = Cipher.getInstance(secretKey.getAlgorithm());
-		cipher.init(Cipher.DECRYPT_MODE, secretKey);
-		return cipher.doFinal(data);
+	public static byte[] getPublicKey(Map<String, Object> keyMap) throws Exception {
+		Key key = (Key) keyMap.get(PUBLIC_KEY);
+		return key.getEncoded();
 	}
 
 	public static byte[] getSecretKey(byte[] publicKey, byte[] privateKey) throws Exception {
@@ -84,14 +80,18 @@ public class DHUtil {
 		SecretKey secretkey = keyAgree.generateSecret(SECRET_ALGORITHM);
 		return secretkey.getEncoded();
 	}
-	
-	public static byte[] getPrivatekey(Map<String, Object> keyMap) throws Exception {
-		Key key = (Key) keyMap.get(PRIVATE_KEY);
-		return key.getEncoded();
+
+	public static byte[] encrypt(byte[] data, byte[] key) throws Exception {
+		SecretKey secretKey = new SecretKeySpec(key, SECRET_ALGORITHM);
+		Cipher cipher = Cipher.getInstance(secretKey.getAlgorithm());
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		return cipher.doFinal(data);
 	}
 
-	public static byte[] getPublicKey(Map<String, Object> keyMap) throws Exception {
-		Key key = (Key) keyMap.get(PUBLIC_KEY);
-		return key.getEncoded();
+	public static byte[] decrypt(byte[] data, byte[] secretKey) throws Exception {
+		SecretKey secKey = new SecretKeySpec(secretKey, SECRET_ALGORITHM);
+		Cipher cipher = Cipher.getInstance(secKey.getAlgorithm());
+		cipher.init(Cipher.DECRYPT_MODE, secKey);
+		return cipher.doFinal(data);
 	}
 }

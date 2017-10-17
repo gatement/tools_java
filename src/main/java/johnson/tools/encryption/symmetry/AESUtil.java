@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.symmetry;
 
 import java.security.Key;
 import java.security.Security;

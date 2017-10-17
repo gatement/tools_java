@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.asymmetry;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,15 +11,15 @@ import org.junit.Test;
 public class RSAUtilTest {
 
 	@Test
-	public void testEncodec() throws Exception {
+	public void testEncryption() throws Exception {
 		String inputStr = "Johnson";
 		byte[] inputData = inputStr.getBytes("UTF-8");
 		
 		Map<String, Object> keyMap = RSAUtil.initKey();
 		byte[] privateKey = RSAUtil.getPrivatekey(keyMap);
 		byte[] publicKey = RSAUtil.getPublickey(keyMap);
-		System.out.println("private key = " + Base64.encodeBase64String(privateKey));
-		System.out.println("public key = " + Base64.encodeBase64String(publicKey));
+		//System.out.println("private key = " + Base64.encodeBase64String(privateKey));
+		//System.out.println("public key = " + Base64.encodeBase64String(publicKey));
 		
 		byte[] privateKeyEncrypted = RSAUtil.encryptByPrivateKey(inputData, privateKey);
 		byte[] publicKeyDecrypted = RSAUtil.decryptByPublicKey(privateKeyEncrypted, publicKey);
@@ -40,7 +40,7 @@ public class RSAUtilTest {
 		byte[] publicKey = RSAUtil.getPublickey(keyMap);
 
 		byte[] sign = RSAUtil.sign(inputData, privateKey);
-		System.out.println("RSA signature = " + Base64.encodeBase64String(sign));
+		//System.out.println("RSA signature = " + Base64.encodeBase64String(sign));
 		
 		boolean verification = RSAUtil.verify(inputData, publicKey, sign);
 		assertTrue(verification);

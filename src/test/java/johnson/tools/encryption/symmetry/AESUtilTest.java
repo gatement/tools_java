@@ -1,4 +1,4 @@
-package johnson.tools;
+package johnson.tools.encryption.symmetry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,22 +11,21 @@ public class AESUtilTest {
 
 	@Test
 	public void testAES128NoPadding() throws Exception {
-		String inputStr = "testAES128PKCS5_";
-		System.out.println("plain text: " + inputStr);
+		String inputStr = "testAES128P12345";
+		//System.out.println("plain text: " + inputStr);
 		byte[] inputData = inputStr.getBytes("UTF-8");
 
 		byte[] key = AESUtil.initKey(128);
 		//System.out.println("secret key: " + Base64.getEncoder().encodeToString(key));
-		System.out.println("secret key: " + Hex.encodeHexString(key));
+		//System.out.println("secret key: " + Hex.encodeHexString(key));
 
 		byte[] encryptedData = AESUtil.encryptNoPadding(inputData, key);
 		//System.out.println("encrypted data: " + Base64.getEncoder().encodeToString(encryptedData));
-		System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
+		//System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
 
 		byte[] decryptedData = AESUtil.decryptNoPadding(encryptedData, key);
 		String decryptedStr = new String(decryptedData, "UTF-8");
-		System.out.println("decrypted text: " + decryptedStr);
-		System.out.println();
+		//System.out.println("decrypted text: " + decryptedStr);
 
 		assertEquals(inputStr, decryptedStr);
 	}
@@ -34,43 +33,41 @@ public class AESUtilTest {
 	@Test
 	public void testAES128PKCS5() throws Exception {
 		String inputStr = "testAES128PKCS5";
-		System.out.println("plain text: " + inputStr);
+		//System.out.println("plain text: " + inputStr);
 		byte[] inputData = inputStr.getBytes("UTF-8");
 
 		byte[] key = AESUtil.initKey(128);
 		//System.out.println("secret key: " + Base64.getEncoder().encodeToString(key));
-		System.out.println("secret key: " + Hex.encodeHexString(key));
+		//System.out.println("secret key: " + Hex.encodeHexString(key));
 
 		byte[] encryptedData = AESUtil.encryptPKCS5(inputData, key);
 		//System.out.println("encrypted data: " + Base64.getEncoder().encodeToString(encryptedData));
-		System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
+		//System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
 
 		byte[] decryptedData = AESUtil.decryptPKCS5(encryptedData, key);
 		String decryptedStr = new String(decryptedData, "UTF-8");
-		System.out.println("decrypted text: " + decryptedStr);
-		System.out.println();
+		//System.out.println("decrypted text: " + decryptedStr);
 
 		assertEquals(inputStr, decryptedStr);
 	}
 
 	@Test
 	public void testAES128PKCS7() throws Exception {
-		String inputStr = "testAES128PKCS";
-		System.out.println("plain text: " + inputStr);
+		String inputStr = "testAES128PKCS7";
+		//System.out.println("plain text: " + inputStr);
 		byte[] inputData = inputStr.getBytes("UTF-8");
 
 		byte[] key = AESUtil.initKey(128);
 		//System.out.println("secret key: " + Base64.getEncoder().encodeToString(key));
-		System.out.println("secret key: " + Hex.encodeHexString(key));
+		//System.out.println("secret key: " + Hex.encodeHexString(key));
 
 		byte[] encryptedData = AESUtil.encryptPKCS7(inputData, key);
 		//System.out.println("encrypted data: " + Base64.getEncoder().encodeToString(encryptedData));
-		System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
+		//System.out.println("encrypted data: " + Hex.encodeHexString(encryptedData));
 
 		byte[] decryptedData = AESUtil.decryptPKCS7(encryptedData, key);
 		String decryptedStr = new String(decryptedData, "UTF-8");
-		System.out.println("decrypted text: " + decryptedStr);
-		System.out.println();
+		//System.out.println("decrypted text: " + decryptedStr);
 
 		assertEquals(inputStr, decryptedStr);
 	}
