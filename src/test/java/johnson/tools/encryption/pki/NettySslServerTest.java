@@ -11,17 +11,25 @@ import org.junit.Test;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.LineEncoder;
+import io.netty.handler.codec.string.LineSeparator;
+import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.util.CharsetUtil;
 
-public class NettySSLServerTest {
+public class NettySslServerTest {
 	private final String host = "localhost";
 	private final int port = 10001;
-	private String cacertKeyStore = "./certs/NettySSLServer/cacert.keystore";
+	private String cacertKeyStore = "./certs/NettySslServer/cacert.keystore";
 	private String keyStorePassword = "123456";
 
 	@Test
@@ -29,16 +37,17 @@ public class NettySSLServerTest {
 		// start server
 		new Thread(new Runnable() {
 			public void run() {
-				NettySSLServer server = new NettySSLServer();
+				NettySslServer server = new NettySslServer();
 				try {
 					server.run();
 				} catch (Exception e) {
 					e.printStackTrace();
-				}		
+				}
 			}
 		}).start();
 		Thread.sleep(500);
 
+		// start client
 		final SslContext sslContext = SslContextBuilder.forClient()
 				.trustManager(getTrustManagerFactory(cacertKeyStore, keyStorePassword)).build();
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -49,19 +58,24 @@ public class NettySSLServerTest {
 						@Override
 						protected void initChannel(Channel ch) throws Exception {
 							ch.pipeline().addFirst("ssl", sslContext.newHandler(ch.alloc()));
+							ch.pipeline().addLast("lineEncoder",
+									new LineEncoder(LineSeparator.UNIX, CharsetUtil.UTF_8));
+							ch.pipeline().addLast("frameDecoder", new LineBasedFrameDecoder(100));
+							ch.pipeline().addLast("stringDecoder", new StringDecoder(CharsetUtil.UTF_8));
+							ch.pipeline().addLast("myHandler", new MyInboundHandler());
 						}
 					});
 			ChannelFuture f = b.connect().sync();
-			Thread.sleep(1000);
-			System.out.println("connect netty ssl server successfully!");
-			f.channel().close();
+			f.channel().writeAndFlush("123\n");
+			f.channel().closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync();
 		}
 	}
 
 	private TrustManagerFactory getTrustManagerFactory(String trustStorePath, String password) throws Exception {
-		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory
+				.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 		KeyStore trustStore = getKeyStore(trustStorePath, password);
 		trustManagerFactory.init(trustStore);
 		return trustManagerFactory;
@@ -73,5 +87,15 @@ public class NettySSLServerTest {
 		ks.load(is, password.toCharArray());
 		is.close();
 		return ks;
+	}
+
+	@Sharable
+	private class MyInboundHandler extends SimpleChannelInboundHandler<String> {
+
+		@Override
+		protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+			//System.out.println("Client got: " + msg);
+			ctx.channel().close();
+		}
 	}
 }
