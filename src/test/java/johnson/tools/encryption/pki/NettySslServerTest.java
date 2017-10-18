@@ -66,7 +66,6 @@ public class NettySslServerTest {
 						}
 					});
 			ChannelFuture f = b.connect().sync();
-			f.channel().writeAndFlush("123\n");
 			f.channel().closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync();
@@ -91,6 +90,10 @@ public class NettySslServerTest {
 
 	@Sharable
 	private class MyInboundHandler extends SimpleChannelInboundHandler<String> {
+		@Override
+		public void channelActive(ChannelHandlerContext ctx) {
+			ctx.writeAndFlush("123\n");
+		}
 
 		@Override
 		protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {

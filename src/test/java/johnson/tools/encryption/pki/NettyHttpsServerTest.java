@@ -93,7 +93,6 @@ public class NettyHttpsServerTest {
 						}
 					});
 			ChannelFuture f = b.connect().sync();
-			f.channel().writeAndFlush(createHttpRequest());
 			latch.await();
 			f.channel().close();
 		} finally {
@@ -133,6 +132,11 @@ public class NettyHttpsServerTest {
 
 	@Sharable
 	public class MyHttpClientHandler extends SimpleChannelInboundHandler<FullHttpResponse> {
+		@Override
+		public void channelActive(ChannelHandlerContext ctx) {
+			ctx.writeAndFlush(createHttpRequest());
+		}
+
 		@Override
 		protected void channelRead0(ChannelHandlerContext ctx, FullHttpResponse response) throws Exception {
 			String content = response.content().toString(CharsetUtil.UTF_8);
