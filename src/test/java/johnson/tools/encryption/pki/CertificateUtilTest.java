@@ -7,7 +7,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 public class CertificateUtilTest {
-	private final String keyStorePath = "./certs/CertificateUtilTest/test.keystore";
+	private final String keyStorePath = "./certs/CertificateUtilTest/key.keystore";
 	private final String keyStoreAlias = "1";
 	private final String keyStorePassword = "123456";
 	private final String certPath= "./certs/CertificateUtilTest/cert.pem"; // or "cert.cer"
