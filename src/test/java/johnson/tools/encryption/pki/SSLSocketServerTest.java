@@ -18,7 +18,7 @@ import org.junit.Test;
 public class SSLSocketServerTest {
 	private String hostname;
 	private int port;
-	private String cacertKeyStore = "./certs/SSLSocketServer/cacert.keystore";
+	private String cacertKeyStore = "./certs/SSLSocketServer/server_cacert.keystore";
 	private String keyStorePassword = "123456";
 
 	@Before

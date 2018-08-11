@@ -1,1 +1,0 @@
-V	371008061128Z		01	unknown	/CN=Johnson Server Intermediate CA

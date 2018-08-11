@@ -11,7 +11,7 @@ import javax.net.ssl.SSLSocket;
 
 public class SSLSocketServer {
 	private int port;
-	private String serverKeyCertKeystore = "./certs/SSLSocketServer/server_keycert_with_intermediate_ca.keystore";
+	private String serverKeyCertKeystore = "./certs/SSLSocketServer/server_keycert_with_cacerts.keystore";
 	private String keyStorePassword = "123456";
 
 	public SSLSocketServer() {

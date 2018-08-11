@@ -29,7 +29,7 @@ import io.netty.util.CharsetUtil;
 public class NettySslServerTest {
 	private final String host = "localhost";
 	private final int port = 10001;
-	private String cacertKeyStore = "./certs/NettySslServer/cacert.keystore";
+	private String cacertKeyStore = "./certs/NettySslServer/server_cacert.keystore";
 	private String keyStorePassword = "123456";
 
 	@Test

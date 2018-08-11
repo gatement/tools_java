@@ -26,7 +26,7 @@ import io.netty.util.CharsetUtil;
 
 public class NettySslServer {
 	private final int port = 10001;
-	private String serverKeyCertKeyStore = "./certs/NettySslServer/server_keycert_with_intermediate_ca.keystore";
+	private String serverKeyCertKeyStore = "./certs/NettySslServer/server_keycert_with_cacerts.keystore";
 	private String keyStorePassword = "123456";
 
 	public void run() throws Exception {

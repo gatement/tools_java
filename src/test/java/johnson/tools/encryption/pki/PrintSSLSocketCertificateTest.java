@@ -13,7 +13,7 @@ import org.junit.Test;
 public class PrintSSLSocketCertificateTest {
 	private String password = "123456";
 	private String keyStorePath = "./certs/PrintSSLSocketCertificateTest/client_keycert.keystore";
-	private String trustStorePath = "./certs/PrintSSLSocketCertificateTest/cacert.keystore";
+	private String trustStorePath = "./certs/PrintSSLSocketCertificateTest/server_cacert.keystore";
 
 	private String hostname;
 	private int port;
