@@ -9,4 +9,5 @@ tools in java
 
 # Test config
 * java 1.8
-* host: 127.0.0.1 local.com
+* nginx 1.13.12, config: ./nginx.conf, url: https://local.com:40443
+* /etc/hosts: 127.0.0.1 local.com

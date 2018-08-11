@@ -1,0 +1,1 @@
+V	380806093028Z		01	unknown	/CN=ServerIntermediateCA

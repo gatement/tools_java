@@ -14,7 +14,7 @@ public class HttpsClientTest {
 	private String httpsUrl = "https://local.com:40443";
 	private String password = "123456";
 	private String keyStorePath = "./certs/HttpsClientTest/client_keycert.keystore";
-	private String trustStorePath = "./certs/HttpsClientTest/cacert.keystore";
+	private String trustStorePath = "./certs/HttpsClientTest/server_cacert.keystore";
 
 	@Test
 	public void test() throws Exception {
