@@ -34,7 +34,7 @@ import io.netty.util.CharsetUtil;
 
 public class NettyHttpsServer {
 	private final int port = 10002;
-	private String serverKeyCertKeyStorePath = "./certs/NettyHttpsServer/server_keycert_with_intermediate_ca.keystore";
+	private String serverKeyCertKeyStorePath = "./certs/NettyHttpsServer/server_keycert_with_cacerts.keystore";
 	private String serverKeyCertKeyStorePassword = "123456";
 	private String clientCacertKeyStorePath = "./certs/NettyHttpsServer/client_cacert.keystore";
 	private String clientCacertKeyStorePassword = "123456";

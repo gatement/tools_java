@@ -38,7 +38,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.util.CharsetUtil;
 
 public class NettyHttpsServerTest {
-	private final String url = "https://localhost:10002";
+	private final String url = "https://local.com:10002";
 	private String cacertKeyStorePath = "./certs/NettyHttpsServerTest/server_cacert.keystore";
 	private String cacertKeyStorePassword = "123456";
 	private String clientKeyStorePath = "./certs/NettyHttpsServerTest/client_keycert.keystore";
