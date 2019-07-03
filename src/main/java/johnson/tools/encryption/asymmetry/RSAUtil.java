@@ -19,7 +19,8 @@ import javax.crypto.Cipher;
 
 public class RSAUtil {
 	public static final String KEY_ALGORITHM = "RSA";
-	public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
+	//public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
+	public static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
 	private static final String PUBLIC_KEY = "RSAPublicKey";
 	private static final String PRIVATE_KEY = "RSAPrivateKey";
 	private static final int KEY_SIZE = 2048;
