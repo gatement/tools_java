@@ -22,8 +22,12 @@ public class HashUtil {
 		return hash("MD5", input);
 	}
 
-	public static byte[] sha(byte[] input) throws NoSuchAlgorithmException {
+	public static byte[] sha1(byte[] input) throws NoSuchAlgorithmException {
 		return hash("SHA", input);
+	}
+
+	public static byte[] sha256(byte[] input) throws NoSuchAlgorithmException {
+		return hash("SHA-256", input);
 	}
 
 	private static byte[] hash(String algorithm, byte[] input) throws NoSuchAlgorithmException {

@@ -32,10 +32,16 @@ public class HashUtilTest {
 	}
 
 	@Test
-	public void testSha() throws NoSuchAlgorithmException {
-		byte[] expected = new byte[] { (byte) 169, (byte) 153, 62, 54, 71, 6, (byte) 129, 106, (byte) 186, 62, 37, 113,
-				120, 80, (byte) 194, 108, (byte) 156, (byte) 208, (byte) 216, (byte) 157 };
-		byte[] actual = HashUtil.sha("abc".getBytes(Charset.forName("UTF-8")));
+	public void testSha1() throws NoSuchAlgorithmException {
+		byte[] expected = new byte[] { (byte) 169, (byte) 153, 62, 54, 71, 6, (byte) 129, 106, (byte) 186, 62, 37, 113, 120, 80, (byte) 194, 108, (byte) 156, (byte) 208, (byte) 216, (byte) 157 };
+		byte[] actual = HashUtil.sha1("abc".getBytes(Charset.forName("UTF-8")));
+		assertArrayEquals(expected, actual);
+	}
+
+	@Test
+	public void testSha256() throws NoSuchAlgorithmException {
+		byte[] expected = new byte[] { (byte)186, 120, 22, (byte)191, (byte)143, 1, (byte)207, (byte)234, 65, 65, 64, (byte)222, 93, (byte)174, 34, 35, (byte)176, 3, 97, (byte)163, (byte)150, 23, 122, (byte)156, (byte)180, 16, (byte)255, 97, (byte)242, 0, 21, (byte)173 };
+		byte[] actual = HashUtil.sha256("abc".getBytes(Charset.forName("UTF-8")));
 		assertArrayEquals(expected, actual);
 	}
 }
